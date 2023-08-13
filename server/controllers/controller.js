@@ -1,7 +1,7 @@
 const fs = require('fs')
 const Bcrypt = require('bcrypt')
 const Auth = require('../models/authModel')
-const { spawn } = require('child_process')
+const { spawn,spawnSync } = require('child_process')
 const Profile = require('../models/profileModel')
 const History = require('../models/historyModel')
 const { createToken } =require('../middlewares/jwtFun')
@@ -17,6 +17,7 @@ exports.home = async(req,res) => {
             try {
                 const filename = req.file.filename
                 const { pname } = req.body
+
                 const process = await spawn('python',['./server/middlewares/process.py',filename])
     
                 process.stdout.on('data',(data)=>{
